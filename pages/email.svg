@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="12.8" width="180">
+  <style>
+    :root {
+      --links: {{ "#00BEFF" if request.args.get("theme") == "blue" else "#ff1f64"}};
+      --links-hover: {{ "#00d4ff" if request.args.get("theme") == "blue" else "#ff4e87"}};
+    }
+
+    text {
+      font-family: Consolas, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
+      font-size: 12.8px;
+      fill: var(--links); /* Default color */
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    a:hover text {
+      fill: var(--links-hover);
+    }
+  </style>
+  <a href="mailto:{{ email|replace('@', '&#64;')|safe }}">
+    <text x="0" y="50%" text-anchor="start"  dominant-baseline="middle">
+      {{ email|replace("@", "&#64;<!-->meow-->")|safe }}
+    </text>
+  </a>
+</svg>

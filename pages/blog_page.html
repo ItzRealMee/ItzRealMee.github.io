@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {# SEO meta tags #}
+    <meta name="description" content="{{ blog.summary }}">
+    <meta name="author" content="dam">
+
+    {# Open Graph meta tags #}
+    <meta name="og:title" content="{{ blog.title }}">
+    <meta name="og:description" content="{{ blog.summary }}">
+    {% if blog.image %}
+        <meta name="og:image" content="{{ blog.image }}">
+    {% endif %}
+    <meta name="og:url" content="https://damcraft.de/blog/{{ blog.url_name }}">
+    <meta name="og:type" content="article">
+    <meta name="og:site_name" content="dam's blog">
+
+    {# Twitter meta tags #}
+    {% if blog.image %}
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="{{ blog.image }}">
+    {% else %}
+        <meta name="twitter:card" content="summary">
+    {% endif %}
+    <meta name="twitter:title" content="{{ blog.title }}">
+    <meta name="twitter:description" content="{{ blog.summary }}">
+    <meta name="twitter:site" content="@dams_blog">
+
+    {# Additional meta tags #}
+    <meta name="theme-color" content="#00BEFF">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" href="/assets/codehilite.css"/>
+
+
+    <title>{{ blog.title }} - dam's blog</title>
+    <style>
+        @font-face {
+            font-family: 'Atkinson Hyperlegible';
+            src: url('/assets/fonts/AtkinsonHyperlegible-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Atkinson Hyperlegible';
+            src: url('/assets/fonts/AtkinsonHyperlegible-Italic.ttf') format('truetype');
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        @font-face {
+            font-family: 'Atkinson Hyperlegible';
+            src: url('/assets/fonts/AtkinsonHyperlegible-Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Atkinson Hyperlegible';
+            src: url('/assets/fonts/AtkinsonHyperlegible-BoldItalic.ttf') format('truetype');
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Atkinson Hyperlegible', sans-serif;
+            padding: 0;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            /* make it a flex container so that the footer can be at the bottom */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .blog-header {
+            text-align: center;
+        }
+
+        .blog-header h1 {
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .blog-summary {
+            font-size: 16px;
+            font-style: italic;
+            margin: 0;
+        }
+        .co-authors {
+            font-size: 14px;
+            font-style: italic;
+            color: #808080;
+        }
+        .co-authors p {
+            margin: 0;
+            padding: 0;
+            display: inline;
+        }
+
+
+        .short-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-style: italic;
+            color: #808080;
+        }
+
+        .blog-content {
+            border-top: 1px solid #333;
+            margin-bottom: 30px;
+        }
+
+        img {
+            display: block;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin: 5px 0;
+        }
+        .subtext {
+            font-style: italic;
+            color: #808080;
+            line-height: 1.2;
+            margin: 0 0 6px 0;
+        }
+
+        footer {
+            border-top: 1px solid #333;
+            padding-top: 4px;
+            text-align: center;
+        }
+        .footer-links {
+            color: #808080;
+            padding: 0 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .footer-text {
+            font-size: 14px;
+            text-align: center;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        video {
+            width: 100%;
+        }
+        pre {
+            padding: 5px;
+        }
+        .codehilite {
+            overflow-x: auto;
+            margin: 5px 0;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0.5em;
+            margin-bottom: 0.25em;
+        }
+        p, figure, ul, ol, pre, blockquote, table {
+            margin: 0;
+        }
+        p {
+            text-align: justify;
+            text-justify: inter-character;
+        }
+        @media (max-width: 800px) {
+            p {
+                text-align: start;
+            }
+        }
+        .footnote p {
+            text-align: start;
+        }
+        .no-select {
+            user-select: none;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .blog-date:hover p {
+            display: none;
+        }
+        .blog-date:hover::before {
+            content: "{{ date_text }}";
+        }
+        .short-url a {
+            text-decoration: underline;
+            color: #808080;
+        }
+        blockquote {
+            border-left: 2px solid #808080;
+            padding: 5px 5px 5px 10px;
+            background-color: #333;
+            margin-top: 5px;
+        }
+        blockquote > blockquote {
+            border-left: 2px solid #666;
+            background-color: #444;
+        }
+        .top-buttons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin-top: 30px;
+            margin-left: max(20px, calc(50% - 650px));
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 20px;
+        }
+        .top-button {
+            color: white;
+            gap: 6px;
+            display: flex;
+        }
+        .top-button img {
+            height: 1em;
+            width: 1em;
+            margin: 5px 0;
+        }
+        @media (max-width: 1100px) {
+            .top-buttons {
+                display: none;
+            }
+        }
+    </style>
+    <link rel="alternate" type="application/rss+xml" title="RSS feed" href="/blog/rss.xml">
+</head>
+<body>
+    <div class="top-buttons">
+        <a href="/" class="top-button">
+            <img src="/assets/home.svg" alt="Home icon">
+            back home
+        </a>
+        <a href="/blog/" class="top-button">
+            <img src="/assets/arrow_left.svg" alt="Back icon">
+            back to blogs
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <header class="blog-header">
+                <h1>{{ blog.title }}</h1>
+            </header>
+
+            {% if blog.co_authors %}
+                <div class="co-authors">Co-authored by
+                    {% for author in blog.co_authors %}
+                        {% if loop.length == 1 %}
+                            {{ author|safe }}
+                        {% elif loop.last %}
+                            and {{ author|safe }}
+                        {% elif loop.index == loop.length - 1 %}
+                            {{ author|safe }}
+                        {% else %}
+                            {{ author|safe }},
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+
+            <section class="blog-summary">
+                <p>{{ blog.summary }}</p>
+            </section>
+
+
+            <div class="short-info">
+                <div class="blog-date">
+                    <p>{{ blog.date }}</p>
+                </div>
+                <div class="short-url">
+                    <p><span class="no-select">short: </span><a href="https://damcraft.de/-{{  blog.hash }}">https://damcraft.de/-{{  blog.hash }}</a></p>
+                </div>
+            </div>
+            {% if blog.image %}
+                <figure class="blog-image">
+                    <img src="{{ blog.image }}" alt="{{ blog.title }}" width="100%">
+                </figure>
+            {% endif %}
+
+            <article class="blog-content">
+                {{ blog.content|safe }}
+            </article>
+
+            <div class="comments">
+                {% include 'comments.html' %}
+            </div>
+        </div>
+        <footer>
+            <div class="footer-links">
+                <a href="/blog/">← Back to blogs</a> <a href="/blog/rss.xml">RSS feed</a>
+            </div>
+            <p class="footer-text">&copy; {{ copyright }} dam</p>
+        </footer>
+    </div>
+</body>
+</html>
