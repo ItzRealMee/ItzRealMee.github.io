@@ -1,7 +1,0 @@
-delta_ip.txt
-cache/
-venv/
-__pycache__/
-others
-.env
-app.log

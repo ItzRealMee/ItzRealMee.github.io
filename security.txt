@@ -1,3 +1,0 @@
-Contact: mailto:contact@damcraft.de
-Encryption: https://damcraft.de/pgp
-Preferred-Languages: en, de
